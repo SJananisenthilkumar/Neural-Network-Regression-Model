@@ -10,7 +10,8 @@ The objective of this project is to develop a Neural Network Regression Model th
 
 ## Neural Network Model
 
-<img width="904" height="541" alt="image" src="https://github.com/user-attachments/assets/e7aa546f-aa28-430f-9e2c-36d3b3917e6d" />
+<img width="842" height="665" alt="image" src="https://github.com/user-attachments/assets/df99db89-d0f4-42d2-9108-770c212ba05a" />
+
 
 
 ## DESIGN STEPS
@@ -50,56 +51,55 @@ Evaluate the model with the testing data.
 class NeuralNet(nn.Module):
     def __init__(self):
         super().__init__()
-        #Include your code here
-        self.fc1=nn.Linear(1,4)
-        self.fc2=nn.Linear(4,6)
-        self.fc3=nn.Linear(6,8)
-        self.fc4=nn.Linear(8,1)
-        self.relu=nn.ReLU()
-        self.history={'loss':[]}
+        self.hidden1 = nn.Linear(1, 16)
+        self.hidden2 = nn.Linear(16, 8)
+        self.output = nn.Linear(8, 1)
+        self.relu = nn.ReLU()
+        self.history = {'loss': []}
+    def forward(self, x):
+        x = self.relu(self.hidden1(x))
+        x = self.relu(self.hidden2(x))
+        x = self.output(x)
+        return x
 
-  def forward(self,x):
-    x=self.relu(self.fc1(x))
-    x=self.relu(self.fc2(x))
-    x=self.relu(self.fc3(x))
-    x=self.fc4(x)
-    return x
-
-
-# Initialize the Model, Loss Function, and Optimizer
-ai_brain=NeuralNet()
-criterion=nn.MSELoss()
-optimizer=optim.RMSprop(ai_brain.parameters(),lr=0.001)
+janani_brain = NeuralNet()
+criterion = nn.MSELoss()
+optimizer = optim.Adam(janani_brain.parameters(), lr=0.01)
 
 
-def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
-    #Include your code here
-    for epoch in range(epochs):
+def train_model(janani_brain, X_train, y_train, criterion, optimizer, epochs=2000):
+    for epoch in range(1, epochs + 1):
         optimizer.zero_grad()
-        loss = criterion(ai_brain(X_train), y_train)
+        outputs = janani_brain(X_train)
+        loss = criterion(outputs, y_train)
         loss.backward()
         optimizer.step()
-   # Append loss inside the loop
-        ai_brain.history['loss'].append(loss.item())
+
+        janani_brain.history['loss'].append(loss.item())
         if epoch % 200 == 0:
             print(f'Epoch [{epoch}/{epochs}], Loss: {loss.item():.6f}')
+
+train_model(janani_brain, X_train_tensor, y_train_tensor, criterion, optimizer)
 
 ```
 ## Dataset Information
 
-<img width="350" height="463" alt="image" src="https://github.com/user-attachments/assets/b8a67076-449a-4b26-bed9-8599059a9ae0" />
+<img width="191" height="529" alt="image" src="https://github.com/user-attachments/assets/a6b12664-78eb-497a-a179-a3bfc7968c46" />
+
 
 
 ## OUTPUT
 
 ### Training Loss Vs Iteration Plot
 
-<img width="666" height="462" alt="image" src="https://github.com/user-attachments/assets/c970857f-ba08-410b-bcce-d7fc040f1641" />
+<img width="752" height="504" alt="image" src="https://github.com/user-attachments/assets/271d0786-182c-47db-8516-731af4d938fc" />
+
 
 
 ### New Sample Data Prediction
 
-<img width="849" height="121" alt="image" src="https://github.com/user-attachments/assets/a4224d04-381b-4297-aa74-7240f9929289" />
+<img width="1101" height="137" alt="image" src="https://github.com/user-attachments/assets/9f4e889e-9425-4df2-a5e1-79f77e78cc8b" />
+
 
 
 ## RESULT
