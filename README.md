@@ -98,8 +98,13 @@ train_model(janani_brain, X_train_tensor, y_train_tensor, criterion, optimizer)
 
 ### New Sample Data Prediction
 
-<img width="1101" height="137" alt="image" src="https://github.com/user-attachments/assets/9f4e889e-9425-4df2-a5e1-79f77e78cc8b" />
+```
+X_n1_1 = torch.tensor([[7]], dtype=torch.float32)
+prediction = janani_brain(torch.tensor(scaler.transform(X_n1_1), dtype=torch.float32)).item()
+print(f'Prediction: {prediction:.4f}')
+```
 
+<img width="603" height="54" alt="image" src="https://github.com/user-attachments/assets/a74c6777-e8bd-48b5-a617-4be044595201" />
 
 
 ## RESULT
